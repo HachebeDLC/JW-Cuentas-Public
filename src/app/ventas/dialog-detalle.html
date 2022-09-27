@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Detalles</h1>
+<mat-dialog-content>
+  <mat-list>
+    <mat-list-item *ngFor="let item of data.objetos">
+      <mat-icon mat-list-icon>note</mat-icon>
+      <div mat-line>{{getNombre(item) | titlecase}}</div>
+      <div mat-line>{{item.numero}}</div>
+    </mat-list-item>
+  </mat-list>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Cerrar</button>
+</mat-dialog-actions>

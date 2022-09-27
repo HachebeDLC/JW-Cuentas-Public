@@ -1,0 +1,33 @@
+<div class="h-full mat-app-background">
+  <mat-toolbar color="primary">
+    <button mat-icon-button (click)="snav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h1>Cuentas Japan</h1>
+  </mat-toolbar>
+  <mat-sidenav-container class="content">
+    <mat-sidenav
+      #snav
+      [mode]="mobileQuery.matches ? 'over' : 'side'"
+      [fixedInViewport]="mobileQuery.matches"
+    >
+      <mat-nav-list class="h-full">
+        <div class="grid h-full content-between">
+          <div>
+            <a
+              mat-list-item
+              [routerLink]="nav.path"
+              (click)="mobileQuery.matches && snav.toggle()"
+              *ngFor="let nav of fillerNav"
+              >{{ nav.data!["label"] }}</a
+            >
+          </div>
+          <a mat-list-item (click)="logOut()">Salir</a>
+        </div>
+      </mat-nav-list></mat-sidenav
+    >
+    <mat-sidenav-content class="content"
+      ><router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

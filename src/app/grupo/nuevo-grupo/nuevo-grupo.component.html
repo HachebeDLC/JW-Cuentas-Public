@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>Nuevo producto</h1>
+<div mat-dialog-content>
+  <form [formGroup]="newGrupo" class="grid self-center justify-center">
+    <mat-form-field >
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="nombre"/>
+    </mat-form-field>
+
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cerrar</button>
+  <button mat-button cdkFocusInitial (click)="crearGrupo()">Añadir</button>
+</div>

@@ -1,0 +1,34 @@
+<h1 mat-dialog-title>Nuevo producto</h1>
+<div mat-dialog-content>
+  <form [formGroup]="newProduct" class="grid self-center justify-center">
+    <mat-form-field>
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="nombre" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Grupo</mat-label>
+      <mat-select formControlName="grupo">
+        <mat-option [value]="null" name="Ninguno">Ninguno</mat-option>
+        <mat-option *ngFor="let grupo of grupos | async" [value]="grupo.id">
+          {{ grupo.nombre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Stock Disponible</mat-label>
+      <input matInput type="number" formControlName="stockTotal" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Stock Vendido</mat-label>
+      <input matInput type="number" formControlName="stockVendido" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Precio</mat-label>
+      <input matInput type="number" formControlName="precio" />
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cerrar</button>
+  <button mat-button cdkFocusInitial (click)="crearProducto()">{{accion}}</button>
+</div>

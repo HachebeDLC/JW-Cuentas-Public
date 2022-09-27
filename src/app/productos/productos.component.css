@@ -1,0 +1,11 @@
+table {
+  width: 100%;
+
+}
+
+.table-container {
+    position: relative;
+    min-height: 200px;
+    max-height: 70vh;
+    overflow: auto;
+}

@@ -1,0 +1,38 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.content {
+  min-height: calc(100vh - 64px);
+
+}
+
+/* Avoid Chrome to see Safari hack */
+@supports (-webkit-touch-callout: none) {
+  body {
+    /* The hack for Safari */
+    height: -webkit-fill-available;
+  }
+}
+
+
+.mat-fab-bottom-right {
+  display: grid;
+  grid-gap: 8px;
+  position: fixed !important;
+  right: 15px;
+  bottom: 30px;
+  z-index: 20;
+
+}

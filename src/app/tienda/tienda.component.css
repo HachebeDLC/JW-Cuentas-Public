@@ -1,0 +1,13 @@
+mat-card {
+  /* width: 60%; */
+  /* height: 60%; */
+  padding: 2em;
+  margin: 4em auto;
+  text-align: center;
+  display: block;
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-disabled,
+::ng-deep .mat-form-field-outline {
+  opacity: 0;
+}

@@ -1,0 +1,93 @@
+<div class="mx-10">
+  <div class="my-10 flex justify-between">
+    <span
+      class="font-heading font-medium text-5xl md:text-10xl xl:text-11xl leading-tight"
+      >Productos</span
+    >
+    <button
+      mat-fab
+      color="primary"
+      class="no-grow mat-fab-bottom-right"
+      (click)="openNewProductDialog()"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <div class="table-container">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      class="mat-elevation-z8 table-auto"
+    >
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.nombre | titlecase }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="grupo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Grupo</th>
+        <td mat-cell *matCellDef="let element">
+          <ng-container *ngIf="element.grupo">
+            {{ element.grupo.nombre }}
+          </ng-container>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="stockTotal">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Stock Total</th>
+        <td mat-cell *matCellDef="let element">
+          <ng-container *ngIf="element.stockTotal">
+            {{ element.stockTotal }}
+          </ng-container>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="stockVendido">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Stock Vendido</th>
+        <td mat-cell *matCellDef="let element">
+          <ng-container *ngIf="element.stockVendido">
+            {{ element.stockVendido }}
+          </ng-container>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="stockDisponible">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Stock Disponible
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <ng-container *ngIf="element.stockVendido && element.stockTotal">
+            {{ element.stockTotal - element.stockVendido }}
+          </ng-container>
+        </td>
+      </ng-container>
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="precio">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.precio | currency: "EUR" }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="detalle">
+        <th mat-header-cell *matHeaderCellDef>Editar</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu>
+            <button mat-menu-item (click)="openNewProductDialog(element)">
+              Editar
+            </button>
+            <button mat-menu-item (click)="deleteProduct(element)">
+              Borrar
+            </button>
+          </mat-menu>
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,109 @@
+<div class="content grid items-center content-center gap-5">
+  <ng-container *ngIf="objetos.length > 0; else goToProducts">
+    <form
+      [formGroup]="venta"
+      (ngSubmit)="onSubmit()"
+      class="grid self-center justify-center fade-in"
+    >
+      <div class="calc-container">
+        <mat-accordion>
+          <ng-container *ngFor="let grupo of grupos">
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ grupo }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngFor="let item of items | async">
+                <div *ngIf="checkGrupo(item, grupo)">
+                  <button
+                    mat-mini-fab
+                    (click)="changeValue(item, -1)"
+                    class="mx-5"
+                  >
+                    <mat-icon>remove</mat-icon>
+                  </button>
+                  <mat-form-field>
+                    <mat-label>
+                      {{ item.nombre | titlecase }}
+                    </mat-label>
+                    <input
+                      matInput
+                      type="number"
+                      [formControlName]="getId(item)"
+                      readonly
+                    />
+                  </mat-form-field>
+                  <button
+                    mat-mini-fab
+                    (click)="changeValue(item, 1)"
+                    class="mx-3"
+                  >
+                    <mat-icon>add</mat-icon>
+                  </button>
+                </div>
+              </ng-container>
+            </mat-expansion-panel>
+          </ng-container>
+        </mat-accordion>
+        <div *ngFor="let item of items | async">
+          <div class="px-6 py-1" *ngIf="!checkGrupo(item)">
+            <button mat-mini-fab (click)="changeValue(item, -1)" class="mx-5">
+              <mat-icon>remove</mat-icon>
+            </button>
+            <mat-form-field>
+              <mat-label>
+                {{ item.nombre | titlecase }}
+              </mat-label>
+              <input
+                matInput
+                type="number"
+                [formControlName]="getId(item)"
+                readonly
+              />
+            </mat-form-field>
+            <button mat-mini-fab (click)="changeValue(item, 1)" class="mx-3">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div
+      class="grid self-center fade-in justify-center items-center content-center"
+    >
+      <mat-divider></mat-divider>
+      <p></p>
+      <div class="grid items-center grid-cols-2">
+        <span class="grow-0"> Total: {{ ventaFinal!.total }} </span>
+        <form class="grow-0">
+          <mat-form-field>
+            <mat-label>Pago Cliente</mat-label>
+            <input
+              matInput
+              type="number"
+              [(ngModel)]="vueltas"
+              name="Vueltas"
+            />
+          </mat-form-field>
+        </form>
+        <div class="grow-0">
+          <span class="font-medium">
+            Vueltas: {{ vueltas - ventaFinal!.total }}
+          </span>
+        </div>
+        <button class="grow-0" mat-button (click)="enviarDatos()" type="submit">
+          Enviar
+        </button>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #goToProducts>
+    <div class="grid self-center justify-center fade-in">
+      <p class="text-xl px-6">
+        Parece que aún no tienes ningún producto añadido, abre el menú lateral y
+        ve a Productos
+      </p>
+    </div>
+  </ng-template>
+</div>

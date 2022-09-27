@@ -1,0 +1,105 @@
+<div class="mx-10">
+  <div class="my-10">
+    <span
+      class="font-heading font-medium text-7xl md:text-10xl xl:text-11xl leading-tight"
+      >Ventas</span
+    >
+    <div class="mat-fab-bottom-right" *ngIf="isMobile">
+      <button
+        mat-fab
+        color="warn"
+        class="scale-up-center"
+        *ngIf="(fecha | async) != 0"
+        (click)="resetFecha()"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button mat-fab color="primary" (click)="picker.open()">
+        <mat-icon>calendar_today</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="table-container">
+    <mat-table [dataSource]="ventas" class="mat-elevation-z8 table-auto">
+      <!--- Note mat-header-cellat mat-header-cellese columns can be defined in any order.
+      The actual rendered columns are set as a property on mat-header-celle row definition" -->
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="numElementos">
+        <mat-header-cell mat-header-cell *matHeaderCellDef
+          >Nº Objetos</mat-header-cell
+        >
+        <mat-cell mat-cell *matCellDef="let element">
+          {{ getNumObjetos(element.objetos) }}
+        </mat-cell>
+        <mat-cell mat-footer-cell *matFooterCellDef>Total</mat-cell>
+      </ng-container>
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="total">
+        <mat-header-cell mat-header-cell *matHeaderCellDef
+          >Total</mat-header-cell
+        >
+        <mat-cell mat-cell *matCellDef="let element">
+          {{ element.total | currency: "EUR" }}
+        </mat-cell>
+        <mat-cell mat-footer-cell *matFooterCellDef>
+          {{ totalVentas | currency: "EUR" }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="fecha">
+        <mat-header-cell mat-header-cell *matHeaderCellDef>
+          <!-- <div class="w-fit"> -->
+          Fecha
+          <div *ngIf="!isMobile">
+            <button mat-icon-button (click)="picker.open()">
+              <mat-icon [ngClass]="{ red: (fecha | async) != 0 }"
+                >calendar_today</mat-icon
+              >
+            </button>
+            <button
+              mat-icon-button
+              (click)="resetFecha()"
+              *ngIf="(fecha | async) != 0"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+
+          <input
+            [matDatepicker]="picker"
+            class="h-0"
+            (dateInput)="updateFecha($event.value)"
+            [(ngModel)]="date"
+          />
+          <mat-datepicker [touchUi]="isMobile" #picker></mat-datepicker>
+          <!-- </div> -->
+        </mat-header-cell>
+
+        <mat-cell mat-cell *matCellDef="let element">
+          {{ element.fecha | date: "d/M/yy, H:mm" }}
+        </mat-cell>
+        <mat-cell mat-footer-cell *matFooterCellDef></mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="detalle">
+        <mat-header-cell mat-header-cell *matHeaderCellDef
+          >Detalle</mat-header-cell
+        >
+        <mat-cell mat-cell *matCellDef="let element">
+          <button mat-icon-button (click)="openDialog(element)">
+            <mat-icon>open_in_new</mat-icon>
+          </button>
+        </mat-cell>
+        <mat-cell mat-footer-cell *matFooterCellDef></mat-cell>
+      </ng-container>
+
+      <mat-header-row
+        *matHeaderRowDef="displayedColumns; sticky: true"
+      ></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      <mat-footer-row
+        *matFooterRowDef="displayedColumns; sticky: true"
+      ></mat-footer-row>
+    </mat-table>
+  </div>
+
+</div>

@@ -1,0 +1,56 @@
+<div class="mx-10">
+  <div class="my-10 flex justify-between">
+    <span
+      class="font-heading font-medium text-5xl md:text-10xl xl:text-11xl leading-tight"
+      >Grupos</span
+    >
+    <button
+      mat-fab
+      color="primary"
+      class="no-grow mat-fab-bottom-right"
+      (click)="openNewGrupoDialog()"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <div class="table-container">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      class="mat-elevation-z8 table-auto"
+    >
+      <ng-container matColumnDef="nombre" sticky>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.nombre | titlecase }}
+        </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="precio" sticky>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>NºProductos</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.num }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="detalle" sticky>
+        <th mat-header-cell *matHeaderCellDef>Editar</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu>
+            <button mat-menu-item (click)="openNewGrupoDialog(element)">Editar</button>
+            <button mat-menu-item (click)="deleteGrupo(element)">Borrar</button>
+          </mat-menu>
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>
